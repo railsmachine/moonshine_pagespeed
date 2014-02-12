@@ -29,10 +29,13 @@ module Pagespeed
     configure(
       :pagespeed => {
         :enabled => true,
+        :inherit_vhost_config => true,
         :cache_path => '/var/mod_pagespeed/cache/',
+        :log_path => '/var/log/pagespeed',
         :file_prefix => '/var/mod_pagespeed/files/',
         :enabled_filters => [],
         :disabled_filters => [],
+        :forbid_filters => [],
         :extra_domains => []
       }
     )
@@ -41,20 +44,22 @@ module Pagespeed
     package "apache2-threaded-dev", :ensure => :installed
     
     file "/usr/local/src",          :ensure => :directory
-    
+
     arch = Facter.architecture
     if arch == "x86_64"
       arch = "amd64"
     end
     
+    url = "https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_#{arch}.deb"
+    
     exec 'download_pagespeed',
-      :command => "wget https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-beta_current_#{arch}.deb",
+      :command => "wget #{url}",
       :cwd => "/usr/local/src",
-      :unless => "test -f /usr/local/src/mod-pagespeed-beta_current_#{arch}.deb"
+      :unless => "test -f /usr/local/src/mod-pagespeed-stable_current_#{arch}.deb"
     
     exec 'install_pagespeed',
       :command => [
-        "dpkg -i mod-pagespeed-beta_current_#{arch}.deb",
+        "dpkg -i mod-pagespeed-stable_current_#{arch}.deb",
         "apt-get -f install"
       ].join(' && '),
       :cwd => "/usr/local/src",
