@@ -59,7 +59,7 @@ module Pagespeed
     
     exec 'install_pagespeed',
       :command => [
-        "dpkg -i mod-pagespeed-stable_current_#{arch}.deb",
+        "dpkg --force-confold -i mod-pagespeed-stable_current_#{arch}.deb",
         "apt-get -f install"
       ].join(' && '),
       :cwd => "/usr/local/src",
