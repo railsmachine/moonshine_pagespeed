@@ -24,3 +24,7 @@ A plugin for installing and configuring Google's mod_pagespeed[http://code.googl
         :extra_domains => [] # CDNs to allow resources from, etc
       }
     )
+
+***
+
+Unless otherwise specified, all content copyright &copy; 2014, [Rails Machine, LLC](http://railsmachine.com)
