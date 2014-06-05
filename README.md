@@ -1,10 +1,10 @@
-= Moonshine_Pagespeed
+# Moonshine_Pagespeed
 
-=== A plugin for Moonshine[http://github.com/railsmachine/moonshine]
+### A plugin for Moonshine[http://github.com/railsmachine/moonshine]
 
 A plugin for installing and configuring Google's mod_pagespeed[http://code.google.com/speed/page-speed/].
 
-=== Instructions
+### Instructions
 
 * Install the plugin
     script/plugin install git://github.com/railsmachine/moonshine_pagespeed.git
@@ -24,3 +24,7 @@ A plugin for installing and configuring Google's mod_pagespeed[http://code.googl
         :extra_domains => [] # CDNs to allow resources from, etc
       }
     )
+
+***
+
+Unless otherwise specified, all content copyright &copy; 2014, [Rails Machine, LLC](http://railsmachine.com)
