@@ -28,6 +28,10 @@
     # the mod_pagespeed cache.
     # ModPagespeedMemcachedServers localhost:11211
 
+    <% if configuration[:pagespeed][:memcached_servers] %>
+    ModPagespeedMemcachedServers <%= configuration[:pagespeed][:memcached_servers] %>
+    <% end %>
+
     # A portion of the cache can be kept in memory only, to reduce load on disk
     # (or memcached) from many small files.
     # ModPagespeedCreateSharedMemoryMetadataCache "/var/cache/mod_pagespeed/" 51200
