@@ -42,21 +42,21 @@ module Pagespeed
     # dependencies for install
     package 'wget',                 :ensure => :installed
     package "apache2-threaded-dev", :ensure => :installed
-    
+
     file "/usr/local/src",          :ensure => :directory
 
-    arch = Facter.architecture
+    arch = Facter.value(:architecture)
     if arch == "x86_64"
       arch = "amd64"
     end
-    
+
     url = "https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_#{arch}.deb"
-    
+
     exec 'download_pagespeed',
       :command => "wget #{url}",
       :cwd => "/usr/local/src",
       :unless => "test -f /usr/local/src/mod-pagespeed-stable_current_#{arch}.deb"
-    
+
     exec 'install_pagespeed',
       :command => [
         "dpkg --force-confold -i mod-pagespeed-stable_current_#{arch}.deb",
@@ -70,14 +70,14 @@ module Pagespeed
         exec('download_pagespeed')
       ],
       :unless => "dpkg -s mod-pagespeed-beta"
-    
+
     file "/etc/apache2/mods-available/pagespeed.conf",
       :ensure => :present,
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'pagespeed.conf.erb')),
       :require => [ exec('install_pagespeed') ],
       :notify => service('apache2'),
       :alias => "pagespeed_conf"
-    
+
     a2enmod 'pagespeed', :require => [ exec('install_pagespeed'), file('pagespeed_conf') ]
   end
 end
